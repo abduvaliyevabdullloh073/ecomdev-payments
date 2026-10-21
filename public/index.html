@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#291444" />
+    <meta
+      name="description"
+      content="O‘quv markazi uchun o‘quvchilar, to‘lovlar va oylik qarzdorlik hisobi."
+      data-i18n-content="pageDescription"
+    />
+    <title data-i18n="pageTitle">Ecomdev — To‘lovlar</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/assets/styles.css" />
+    <script type="module" src="/assets/client/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main"
+      ><span data-i18n="skipMain">Asosiy qismga o‘tish</span></a
+    >
+    <aside class="sidebar">
+      <a
+        class="brand"
+        href="/"
+        aria-label="Ecomdev bosh sahifasi"
+        data-i18n-aria-label="home"
+        ><span class="brand-mark"
+          ><svg aria-hidden="true">
+            <use href="/assets/icons.svg#brand-e"></use></svg></span
+        ><span class="brand-copy"
+          ><span class="brand-name">Ecomdev</span
+          ><small
+            ><span data-i18n="brandTagline">TO‘LOVLAR BOSHQARUVI</span></small
+          ></span
+        ></a
+      >
+      <div class="nav-caption">
+        <span data-i18n="workspaceCaption">ISH MAYDONI</span>
+      </div>
+      <nav
+        class="side-nav"
+        aria-label="Asosiy navigatsiya"
+        data-i18n-aria-label="mainNavigation"
+      >
+        <button
+          class="nav-link active"
+          type="button"
+          aria-label="Qarzdorlar"
+          data-tab="debtors"
+          aria-current="page"
+          data-i18n-aria-label="debtors"
+        >
+          <svg aria-hidden="true">
+            <use href="/assets/icons.svg#dashboard"></use></svg
+          ><span><span data-i18n="debtors">Qarzdorlar</span></span
+          ><span class="nav-count" id="nav-count">0</span>
+        </button>
+        <button
+          class="nav-link"
+          type="button"
+          aria-label="O‘quvchilar"
+          data-tab="students"
+          data-i18n-aria-label="students"
+        >
+          <svg aria-hidden="true">
+            <use href="/assets/icons.svg#users"></use></svg
+          ><span><span data-i18n="students">O‘quvchilar</span></span>
+        </button>
+        <button
+          class="nav-link"
+          type="button"
+          aria-label="To‘lovlar tarixi"
+          data-tab="payments"
+          data-i18n-aria-label="paymentHistory"
+        >
+          <svg aria-hidden="true">
+            <use href="/assets/icons.svg#wallet"></use></svg
+          ><span><span data-i18n="paymentHistory">To‘lovlar tarixi</span></span>
+        </button>
+      </nav>
+      <div class="sidebar-note">
+        <span class="note-symbol">↗</span
+        ><strong
+          ><span data-i18n="sidebarTitle">Har bir to‘lov hisobda.</span></strong
+        >
+        <p>
+          <span data-i18n="sidebarText"
+            >Markazingiz moliyasini bir joyda boshqaring.</span
+          >
+        </p>
+      </div>
+      <div class="sidebar-footer">
+        <span class="avatar admin-avatar">EC</span
+        ><span
+          ><strong><span data-i18n="brandName">Ecomdev</span></strong
+          ><small
+            ><span data-i18n="administrator">Administrator paneli</span></small
+          ></span
+        ><span class="status-dot" aria-hidden="true"></span>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="breadcrumb">
+          <span data-i18n="workspace"> Ish maydoni </span><span>/</span>
+          <strong id="breadcrumb-current"
+            ><span data-i18n="debtors">Qarzdorlar</span></strong
+          >
+        </div>
+        <div class="topbar-right">
+          <select
+            id="language"
+            class="language-select"
+            data-language-control
+            aria-label="Til"
+            data-i18n-aria-label="language"
+          >
+            <option value="uz">O‘zbekcha</option>
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+          </select>
+          <span class="workspace-badge"
+            ><span class="status-dot"></span
+            ><span data-i18n="financialAccount"> Moliyaviy hisob</span></span
+          ><span class="avatar top-avatar">EC</span>
+        </div>
+      </header>
+      <main id="main" tabindex="-1">
+        <section class="page-intro">
+          <div>
+            <div class="eyebrow">
+              <span data-i18n="pageEyebrow"
+                >MARKAZINGIZNING MOLIYAVIY HOLATI</span
+              >
+            </div>
+            <h1>
+              <span data-i18n="heading">To‘lovlar nazoratda</span><span>.</span>
+            </h1>
+            <p>
+              <span data-i18n="intro"
+                >O‘quvchilar, to‘lovlar va qarzdorlik — barchasi bir
+                joyda.</span
+              >
+            </p>
+          </div>
+          <button class="button primary" id="add-payment" type="button">
+            <svg aria-hidden="true">
+              <use href="/assets/icons.svg#plus"></use></svg
+            ><span data-i18n="addPayment">To‘lov qo‘shish </span>
+          </button>
+        </section>
+
+        <div class="period-bar">
+          <div class="period-title">
+            <svg aria-hidden="true">
+              <use href="/assets/icons.svg#calendar"></use></svg
+            ><span><span data-i18n="reportPeriod">Hisobot davri</span></span>
+          </div>
+          <div class="period-controls">
+            <button
+              class="icon-button"
+              id="previous-month"
+              type="button"
+              aria-label="Oldingi oy"
+              data-i18n-aria-label="previousMonth"
+            >
+              <svg aria-hidden="true">
+                <use href="/assets/icons.svg#chevron-left"></use>
+              </svg></button
+            ><label class="sr-only" for="month"
+              ><span data-i18n="reportMonth">Hisobot oyi</span></label
+            ><input
+              type="month"
+              id="month"
+              min="1000-01"
+              max="9999-12"
+              required
+            /><button
+              class="icon-button"
+              id="next-month"
+              type="button"
+              aria-label="Keyingi oy"
+              data-i18n-aria-label="nextMonth"
+            >
+              <svg aria-hidden="true">
+                <use href="/assets/icons.svg#chevron-right"></use>
+              </svg></button
+            ><span class="period-divider"></span
+            ><button class="text-button" type="button" id="current-month">
+              <span data-i18n="currentMonth"> Joriy oy</span></button
+            ><button
+              class="icon-button refresh-button"
+              type="button"
+              id="refresh"
+              aria-label="Ma’lumotlarni yangilash"
+              data-i18n-aria-label="refresh"
+            >
+              <svg aria-hidden="true">
+                <use href="/assets/icons.svg#refresh"></use>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="load-error" class="error-banner" role="alert" hidden>
+          <span id="load-error-text"></span
+          ><button type="button" class="text-button" id="retry">
+            <span data-i18n="retry"> Qayta urinish </span>
+          </button>
+        </div>
+
+        <section
+          class="stats-grid"
+          aria-label="Oylik ko‘rsatkichlar"
+          aria-live="polite"
+          data-i18n-aria-label="monthlyStats"
+        >
+          <article class="stat-card featured">
+            <div class="stat-top">
+              <span><span data-i18n="collected">Kelgan to‘lovlar</span></span
+              ><span class="stat-icon"
+                ><svg aria-hidden="true">
+                  <use href="/assets/icons.svg#wallet"></use></svg
+              ></span>
+            </div>
+            <div class="stat-value" id="stat-collected">—</div>
+            <div class="stat-foot">
+              <span class="mini-dot"></span
+              ><span
+                ><span data-i18n="collectedCaption"
+                  >Tanlangan oy uchun tushum</span
+                ></span
+              >
+            </div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top">
+              <span><span data-i18n="expected">Kutilayotgan to‘lov</span></span
+              ><span class="stat-icon"
+                ><svg aria-hidden="true">
+                  <use href="/assets/icons.svg#chart"></use></svg
+              ></span>
+            </div>
+            <div class="stat-value" id="stat-expected">—</div>
+            <div class="stat-foot">
+              <span data-i18n="expectedCaption"
+                >Barcha o‘quvchilarning oylik summasi</span
+              >
+            </div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top">
+              <span><span data-i18n="outstanding">Jami qarzdorlik</span></span
+              ><span class="stat-icon warning-icon"
+                ><svg aria-hidden="true">
+                  <use href="/assets/icons.svg#clock"></use></svg
+              ></span>
+            </div>
+            <div class="stat-value debt-value" id="stat-debt">—</div>
+            <div class="stat-foot" id="stat-debt-caption">
+              <span data-i18n="initialLoading"> Ma’lumotlar yuklanmoqda </span>
+            </div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top">
+              <span><span data-i18n="students">O‘quvchilar</span></span
+              ><span class="stat-icon"
+                ><svg aria-hidden="true">
+                  <use href="/assets/icons.svg#users"></use></svg
+              ></span>
+            </div>
+            <div class="stat-value" id="stat-students">—</div>
+            <div class="stat-foot" id="stat-students-caption">
+              <span data-i18n="allStudents">
+                Markazning barcha o‘quvchilari
+              </span>
+            </div>
+          </article>
+        </section>
+
+        <div class="content-grid">
+          <section class="panel ledger-panel" aria-labelledby="table-title">
+            <div class="panel-heading">
+              <div>
+                <h2 id="table-title">
+                  <span data-i18n="debtors"> Qarzdorlar </span
+                  ><span class="count-badge" id="table-count">0</span>
+                </h2>
+                <p id="table-description">
+                  <span data-i18n="debtorsDescription">
+                    Tanlangan oyda to‘lovi yakunlanmagan o‘quvchilar.
+                  </span>
+                </p>
+              </div>
+              <button
+                class="button secondary small"
+                id="add-student"
+                type="button"
+              >
+                <svg aria-hidden="true">
+                  <use href="/assets/icons.svg#plus"></use></svg
+                ><span data-i18n="student">O‘quvchi </span>
+              </button>
+            </div>
+            <div
+              class="tab-strip"
+              role="tablist"
+              aria-label="Hisob bo‘limi"
+              data-i18n-aria-label="sectionLabel"
+            >
+              <button
+                id="tab-debtors"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="table-content"
+                data-tab="debtors"
+                class="tab active"
+              >
+                <span data-i18n="debtors"> Qarzdorlar</span></button
+              ><button
+                id="tab-students"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="table-content"
+                tabindex="-1"
+                data-tab="students"
+                class="tab"
+              >
+                <span data-i18n="students"> O‘quvchilar</span></button
+              ><button
+                id="tab-payments"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="table-content"
+                tabindex="-1"
+                data-tab="payments"
+                class="tab"
+              >
+                <span data-i18n="payments"> To‘lovlar </span>
+              </button>
+            </div>
+            <div class="table-tools">
+              <div class="search-field">
+                <svg aria-hidden="true">
+                  <use href="/assets/icons.svg#search"></use></svg
+                ><label for="search" class="sr-only"
+                  ><span data-i18n="searchLabel"
+                    >Ism, telefon yoki guruh bo‘yicha qidirish</span
+                  ></label
+                ><input
+                  type="search"
+                  id="search"
+                  placeholder="Ism, telefon yoki guruh…"
+                  autocomplete="off"
+                  data-i18n-placeholder="searchPlaceholder"
+                />
+              </div>
+              <label class="sr-only" for="group-filter"
+                ><span data-i18n="groupFilter"
+                  >Guruh bo‘yicha saralash</span
+                ></label
+              ><select id="group-filter">
+                <option value="" data-i18n="allGroups">Barcha guruhlar</option>
+              </select>
+            </div>
+            <div
+              id="table-content"
+              role="tabpanel"
+              aria-labelledby="tab-debtors"
+              aria-busy="true"
+            >
+              <div class="loading-state">
+                <span class="loader"></span
+                ><span data-i18n="loadingData">Ma’lumotlar yuklanmoqda… </span>
+              </div>
+            </div>
+            <div class="table-footer">
+              <span id="result-count"
+                ><span data-i18n="loading">Yuklanmoqda…</span></span
+              ><span
+                ><span class="status-dot"></span
+                ><span data-i18n="savedData"> Saqlangan ma’lumotlar</span></span
+              >
+            </div>
+          </section>
+
+          <aside
+            class="insights"
+            aria-label="Hisobot tafsilotlari"
+            data-i18n-aria-label="reportDetails"
+          >
+            <section class="panel progress-panel">
+              <div class="aside-heading">
+                <h2><span data-i18n="monthlyCollection">Oylik yig‘im</span></h2>
+                <svg aria-hidden="true">
+                  <use href="/assets/icons.svg#chart"></use>
+                </svg>
+              </div>
+              <div class="ring-container">
+                <svg
+                  class="progress-ring"
+                  viewBox="0 0 180 180"
+                  aria-hidden="true"
+                >
+                  <circle class="ring-track" cx="90" cy="90" r="70"></circle>
+                  <circle
+                    class="ring-fill"
+                    id="ring-fill"
+                    cx="90"
+                    cy="90"
+                    r="70"
+                    pathLength="100"
+                    stroke-dasharray="0 100"
+                  ></circle>
+                </svg>
+                <div class="ring-label">
+                  <strong id="collection-percent">0%</strong
+                  ><span
+                    ><span data-i18n="planCompleted">reja bajarildi</span></span
+                  >
+                </div>
+              </div>
+              <div class="progress-legend">
+                <span
+                  ><i class="legend-dot green-dot"></i
+                  ><span data-i18n="applied">Qoplangan</span></span
+                ><strong id="legend-applied">—</strong>
+              </div>
+              <div class="progress-legend">
+                <span
+                  ><i class="legend-dot light-dot"></i
+                  ><span data-i18n="remaining">Qolgan</span></span
+                ><strong id="legend-outstanding">—</strong>
+              </div>
+              <p class="progress-note" id="collection-note">
+                <span data-i18n="paymentStatus">
+                  Tanlangan oyning to‘lov holati.
+                </span>
+              </p>
+            </section>
+            <section class="panel activity-panel">
+              <div class="aside-heading">
+                <h2>
+                  <span data-i18n="latestPayments">Oxirgi to‘lovlar</span>
+                </h2>
+                <span class="live-label"
+                  ><span data-i18n="thisMonth">SHU OY</span></span
+                >
+              </div>
+              <div id="recent-payments">
+                <p class="aside-empty">
+                  <span data-i18n="loadingPayments"
+                    >To‘lovlar yuklanmoqda…</span
+                  >
+                </p>
+              </div>
+              <button class="view-all" type="button" data-tab="payments">
+                <span data-i18n="viewAll"> Barcha to‘lovlarni ko‘rish </span
+                ><span>↗</span>
+              </button>
+            </section>
+            <div class="help-note">
+              <svg aria-hidden="true">
+                <use href="/assets/icons.svg#info"></use>
+              </svg>
+              <p>
+                <span data-i18n="separateMonths"
+                  >Qarzdorlik har bir oy uchun alohida hisoblanadi.</span
+                >
+              </p>
+            </div>
+          </aside>
+        </div>
+        <footer class="page-footer">
+          <span>Ecomdev</span
+          ><span
+            ><span data-i18n="footer"
+              >Tartibli hisob. Xotirjam boshqaruv.</span
+            ></span
+          >
+        </footer>
+      </main>
+    </div>
+
+    <dialog
+      id="payment-dialog"
+      class="modal"
+      aria-labelledby="payment-dialog-title"
+    >
+      <form id="payment-form">
+        <div class="modal-heading">
+          <div>
+            <div class="eyebrow">
+              <span data-i18n="newOperation">YANGI OPERATSIYA</span>
+            </div>
+            <h2 id="payment-dialog-title">
+              <span data-i18n="addPayment">To‘lov qo‘shish</span>
+            </h2>
+          </div>
+          <div class="modal-tools">
+            <select
+              class="language-select"
+              data-language-control
+              aria-label="Til"
+              data-i18n-aria-label="language"
+            >
+              <option value="uz">O‘zbekcha</option>
+              <option value="ru">Русский</option>
+              <option value="en">English</option></select
+            ><button
+              type="button"
+              class="icon-button close-dialog"
+              aria-label="Yopish"
+              data-i18n-aria-label="close"
+            >
+              <svg aria-hidden="true">
+                <use href="/assets/icons.svg#close"></use>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <p class="modal-intro">
+          <span data-i18n="paymentIntro"
+            >To‘lov o‘quvchi hisobiga darhol yoziladi.</span
+          >
+        </p>
+        <div class="form-error" role="alert" id="payment-error" hidden></div>
+        <label for="payment-student"
+          ><span data-i18n="student">O‘quvchi</span></label
+        ><select id="payment-student" name="studentId" required>
+          <option value="" data-i18n="selectStudent">O‘quvchini tanlang</option>
+        </select>
+        <div class="field-row">
+          <div>
+            <label for="payment-amount"
+              ><span data-i18n="amount">Summa </span
+              ><span><span data-i18n="currency">so‘m</span></span></label
+            ><input
+              type="number"
+              id="payment-amount"
+              name="amount"
+              min="0.01"
+              max="100000000"
+              step="0.01"
+              placeholder="0"
+              required
+              inputmode="decimal"
+            />
+          </div>
+          <div>
+            <label for="payment-date"
+              ><span data-i18n="paymentDate">To‘lov sanasi</span></label
+            ><input
+              type="date"
+              id="payment-date"
+              name="date"
+              min="1000-01-01"
+              max="9999-12-31"
+              required
+            />
+          </div>
+        </div>
+        <p class="field-help">
+          <span data-i18n="paymentDateHelp">
+            To‘lov sanasi qaysi oyga tegishli bo‘lsa, o‘sha oy hisobotiga
+            kiritiladi.
+          </span>
+        </p>
+        <div class="modal-actions">
+          <button type="button" class="button secondary close-dialog">
+            <span data-i18n="cancel"> Bekor qilish</span></button
+          ><button type="submit" class="button primary" id="save-payment">
+            <span data-i18n="savePayment"> To‘lovni saqlash </span>
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog
+      id="student-dialog"
+      class="modal"
+      aria-labelledby="student-dialog-title"
+    >
+      <form id="student-form">
+        <div class="modal-heading">
+          <div>
+            <div class="eyebrow">
+              <span data-i18n="studentDetails">O‘QUVCHI MA’LUMOTLARI</span>
+            </div>
+            <h2 id="student-dialog-title">
+              <span data-i18n="addStudent">O‘quvchi qo‘shish</span>
+            </h2>
+          </div>
+          <div class="modal-tools">
+            <select
+              class="language-select"
+              data-language-control
+              aria-label="Til"
+              data-i18n-aria-label="language"
+            >
+              <option value="uz">O‘zbekcha</option>
+              <option value="ru">Русский</option>
+              <option value="en">English</option></select
+            ><button
+              type="button"
+              class="icon-button close-dialog"
+              aria-label="Yopish"
+              data-i18n-aria-label="close"
+            >
+              <svg aria-hidden="true">
+                <use href="/assets/icons.svg#close"></use>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="form-error" role="alert" id="student-error" hidden></div>
+        <label for="student-name"
+          ><span data-i18n="fullName">Ism va familiya</span></label
+        ><input
+          id="student-name"
+          name="name"
+          maxlength="100"
+          autocomplete="name"
+          placeholder="Masalan, Aziz Karimov"
+          required
+          data-i18n-placeholder="exampleName"
+        /><label for="student-phone"
+          ><span data-i18n="phoneNumber">Telefon raqami</span></label
+        ><input
+          type="tel"
+          id="student-phone"
+          name="phone"
+          minlength="5"
+          maxlength="30"
+          autocomplete="tel"
+          placeholder="+998 90 123 45 67"
+          required
+        />
+        <div class="field-row">
+          <div>
+            <label for="student-group"
+              ><span data-i18n="group">Guruh</span></label
+            ><input
+              id="student-group"
+              name="group"
+              maxlength="80"
+              placeholder="Frontend · F-12"
+              required
+            />
+          </div>
+          <div>
+            <label for="student-fee"
+              ><span data-i18n="monthlyFee">Oylik to‘lov </span
+              ><span><span data-i18n="currency">so‘m</span></span></label
+            ><input
+              type="number"
+              id="student-fee"
+              name="monthlyFee"
+              min="0"
+              max="100000000"
+              step="0.01"
+              placeholder="850000"
+              inputmode="decimal"
+              required
+            />
+          </div>
+        </div>
+        <p class="field-help">
+          <span data-i18n="feeChangeHelp">
+            Oylik to‘lov o‘zgarsa, oldingi oylar hisobotlari ham yangi summa
+            bilan hisoblanadi.
+          </span>
+        </p>
+        <div class="modal-actions">
+          <button type="button" class="button secondary close-dialog">
+            <span data-i18n="cancel"> Bekor qilish</span></button
+          ><button type="submit" class="button primary" id="save-student">
+            <span data-i18n="save"> Saqlash </span>
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog
+      id="delete-dialog"
+      class="modal compact-modal"
+      aria-labelledby="delete-dialog-title"
+    >
+      <form id="delete-form">
+        <div class="modal-heading">
+          <h2 id="delete-dialog-title">
+            <span data-i18n="deleteStudent">O‘quvchini o‘chirish</span>
+          </h2>
+          <div class="modal-tools">
+            <select
+              class="language-select"
+              data-language-control
+              aria-label="Til"
+              data-i18n-aria-label="language"
+            >
+              <option value="uz">O‘zbekcha</option>
+              <option value="ru">Русский</option>
+              <option value="en">English</option></select
+            ><button
+              class="icon-button close-dialog"
+              type="button"
+              aria-label="Yopish"
+              data-i18n-aria-label="close"
+            >
+              <svg aria-hidden="true">
+                <use href="/assets/icons.svg#close"></use>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <p class="modal-intro">
+          <strong id="delete-name"></strong
+          ><span data-i18n="deleteWarning">
+            va uning barcha to‘lovlari o‘chiriladi. Bu amalni qaytarib
+            bo‘lmaydi.
+          </span>
+        </p>
+        <div id="delete-error" class="form-error" role="alert" hidden></div>
+        <div class="modal-actions">
+          <button type="button" class="button secondary close-dialog">
+            <span data-i18n="cancel"> Bekor qilish</span></button
+          ><button type="submit" class="button danger" id="confirm-delete">
+            <span data-i18n="delete"> O‘chirish </span>
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="history-dialog" class="modal" aria-labelledby="history-title">
+      <div class="modal-heading">
+        <div>
+          <div class="eyebrow">
+            <span data-i18n="historyEyebrow">TO‘LOVLAR TARIXI</span>
+          </div>
+          <h2 id="history-title"><span data-i18n="student">O‘quvchi</span></h2>
+        </div>
+        <div class="modal-tools">
+          <select
+            class="language-select"
+            data-language-control
+            aria-label="Til"
+            data-i18n-aria-label="language"
+          >
+            <option value="uz">O‘zbekcha</option>
+            <option value="ru">Русский</option>
+            <option value="en">English</option></select
+          ><button
+            class="icon-button close-dialog"
+            type="button"
+            aria-label="Yopish"
+            data-i18n-aria-label="close"
+          >
+            <svg aria-hidden="true">
+              <use href="/assets/icons.svg#close"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="history-content"></div>
+    </dialog>
+
+    <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
+  </body>
+</html>

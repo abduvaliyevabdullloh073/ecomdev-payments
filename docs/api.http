@@ -1,0 +1,45 @@
+@base = http://127.0.0.1:3000
+@studentId = 1
+@month = 2026-10
+
+### Health
+GET {{base}}/health
+
+### List students
+GET {{base}}/students
+
+### Create a student; copy the returned id to studentId above
+POST {{base}}/students
+Content-Type: application/json
+
+{"name":"Aziz Karimov","phone":"+998 90 123 45 67","group":"Node.js N-01","monthlyFee":850000}
+
+### Read one student
+GET {{base}}/students/{{studentId}}
+
+### Update one field
+PATCH {{base}}/students/{{studentId}}
+Content-Type: application/json
+
+{"phone":"+998 91 123 45 67"}
+
+### Add a payment
+POST {{base}}/payments
+Content-Type: application/json
+
+{"studentId":{{studentId}},"amount":400000,"date":"2026-10-10"}
+
+### Payments for one student, all months
+GET {{base}}/students/{{studentId}}/payments
+
+### Debtors for selected month
+GET {{base}}/debtors?month={{month}}
+
+### Monthly summary
+GET {{base}}/summary?month={{month}}
+
+### Monthly payments
+GET {{base}}/payments?month={{month}}
+
+### Delete student AND all their payments — run only when intended
+DELETE {{base}}/students/{{studentId}}
